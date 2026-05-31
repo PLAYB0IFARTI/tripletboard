@@ -6,6 +6,7 @@ class Button:
         # Create DigitalInOut object
         self.pin = digitalio.DigitalInOut(pin)
         self.pin.direction = digitalio.Direction.INPUT
+        self.pv = False # previous value
 
         # CircuitPython uses Pull.UP or Pull.DOWN
         if pullDown:
@@ -23,3 +24,17 @@ class Button:
 
     def pressed(self):
         return self.is_pressed()
+    
+    # if you just wanna check if its pressed and do one action
+    
+    def just_pressed(self):
+        current = self.is_pressed()
+
+        if current and not self.pv:
+            self.pv = current
+            return True
+        else:
+            self.pv = current
+            return False
+            
+
